@@ -28,6 +28,8 @@ app.get('/', (req, res) => {
     res.json({"message": "Projet Domo"})
 });
 
+require('./src/app/routes/domo.routes.js')(app);
+
 app.listen(3002, () => {
     console.log("Server is listening on port 3002")
 });

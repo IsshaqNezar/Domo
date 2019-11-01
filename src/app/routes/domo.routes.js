@@ -1,5 +1,5 @@
 module.exports = (app) => {
-    const notes = require('../controllers/domo.controller.js');
+    const domo = require('../controllers/domo.controller.js');
 
     // Nouvelle donnée de température
     app.post('/temperature', domo.create);
