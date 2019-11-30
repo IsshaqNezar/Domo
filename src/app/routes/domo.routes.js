@@ -10,7 +10,7 @@ module.exports = (app) => {
     // Récupérer une seule donnée de Température
     app.get('/temperature/:dataId', domo.findOne);
 
-    // Nouvelle donnée de lumière 
+   /*  // Nouvelle donnée de lumière 
     app.post('/lumiere', domo.create);
 
     // Récupérer toutes les données lumière
@@ -27,6 +27,6 @@ module.exports = (app) => {
 
     // Récupérer une seule donnée de présence
     app.get('/presence/:dataId', domo.findOne);
-    
+     */
 
 }

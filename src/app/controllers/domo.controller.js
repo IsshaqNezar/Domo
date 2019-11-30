@@ -3,10 +3,11 @@ const Donnee = require('../models/domo.model.js');
 
 // Créer et stocker une nouvelle donnée de température
 exports.create = (req, res) => {
+
     //Valider la requête
-    if(!req.body.content) {
+    if(!req.body.valeur) {
         return res.status(400).send({
-            message: "Il faut une donnée"
+            message: "Il faut une donnée"   
         });
     }
 
@@ -28,24 +29,37 @@ donneetemp.save()
 
 };
 
+
+// Récupérer toute les données de température
+exports.findAll = (req, res) => {
+    Donnee.find()
+    .then( donneetemp => {
+        res.send(donneetemp);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
 // Récupérer une seule donnée de température
 exports.findOne = (req, res) => {
-    Donnee.findById(req.params.donneeId)
-    .then(donneelum => {
-        if(!donneelum) {
+    Donnee.findById(req.params.dataId)
+    .then(donneetemp => {
+        if(!donneetemp){
             return res.status(404).send({
-                message: "Pas de donnée de lumière" + req.params.donneeId
+                message: "La temperature n'a pas été trouvée " + req.params.dataId
             });
         }
-        res.send(donneelum);
+        res.send(donneetemp);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "Aucune donnée trouvée avec l'Id" + req.params.donneeId
+                message: "Température non trouvée " + req.params.dataId
             });
         }
         return res.status(500).send({
-            message: "Récupérer la donnée avec Id à causer une erreur" + req.params.donneeId
+            message: "Erreur lors de la récupération " + req.params.dataId
         });
     });
 };
