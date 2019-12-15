@@ -3,16 +3,7 @@ const bodyParser = require ('body-parser');
 
 const app = express();
 
-const server = require("http").createServer(app);
-const io = require("socket.io").listen(server);
-const port = 5000;
-
-io.on("connection", socket => {
-    console.log("a user is connected");
-    console.log(socket.id);
-});
-
-server.listen(port, () => console.log("server running on port" + port));
+var expressWs = require('express-ws')(app);
 
 app.use(bodyParser.urlencoded({extended: true}))
 

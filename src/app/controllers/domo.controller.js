@@ -3,6 +3,8 @@ const DonneeLum = require('../models/lumiere.model.js');
 const DonneePresence = require('../models/presence.model.js');
 const DonneeFlamme = require('../models/flamme.model.js');
 
+var tableauSocket = [];
+
 /* ************************************************************** 
 
                         TEMPERATURE
@@ -10,7 +12,7 @@ const DonneeFlamme = require('../models/flamme.model.js');
 ***************************************************************** */
 
 // Créer et stocker une nouvelle donnée de température
-exports.create = (req, res) => {
+exports.createTemp = (req, res) => {
 
     //Valider la requête
     if(!req.body.valeur) {
@@ -28,7 +30,14 @@ const donneetemp = new DonneeTemp({
 //Stocker la donnée dans la DB
 donneetemp.save()
 .then(data => {
+    
+    sendSocket(JSON.stringify({
+        date: data.date,
+        valeur: data.valeur,
+        type: 'temperature',
+        }));
     res.send(data);
+    
 }).catch(err => {
     res.status(500).send({
         message: err.message || "Une erreure est apparue durant le stockage."
@@ -39,7 +48,7 @@ donneetemp.save()
 
 
 // Récupérer toute les données de température
-exports.findAll = (req, res) => {
+exports.findAllTemp = (req, res) => {
     DonneeTemp.find()
     .then( donneetemp => {
         res.send(donneetemp);
@@ -51,7 +60,7 @@ exports.findAll = (req, res) => {
 };
 
 // Récupérer une seule donnée de température
-exports.findOne = (req, res) => {
+exports.findOneTemp = (req, res) => {
     DonneeTemp.findById(req.params.dataId)
     .then(donneetemp => {
         if(!donneetemp){
@@ -81,7 +90,7 @@ exports.findOne = (req, res) => {
 ***************************************************************************** */
 
 // Créer et stocker une nouvelle donnée de lumière
-exports.create = (req, res) => {
+exports.createLum = (req, res) => {
 
     //Valider la requête
     if(!req.body.valeur) {
@@ -99,6 +108,11 @@ const donneelum = new DonneeLum({
 //Stocker la donnée dans la DB
 donneelum.save()
 .then(data => {
+    ssendSocket(JSON.stringify({
+        date: data.date,
+        valeur: data.valeur,
+        type: 'lumiere',
+        }));
     res.send(data);
 }).catch(err => {
     res.status(500).send({
@@ -110,7 +124,7 @@ donneelum.save()
 
 
 // Récupérer toute les données de lumière
-exports.findAll = (req, res) => {
+exports.findAllLum = (req, res) => {
     DonneeLum.find()
     .then( donneelum => {
         res.send(donneelum);
@@ -122,7 +136,7 @@ exports.findAll = (req, res) => {
 };
 
 // Récupérer une seule donnée de lumière
-exports.findOne = (req, res) => {
+exports.findOneLum = (req, res) => {
     DonneeLum.findById(req.params.dataId)
     .then(donneelum => {
         if(!donneelum){
@@ -150,7 +164,7 @@ exports.findOne = (req, res) => {
 *************************************************************** */
 
 // Créer et stocker une nouvelle donnée de presence
-exports.create = (req, res) => {
+exports.createPres = (req, res) => {
 
     //Valider la requête
     if(!req.body.valeur) {
@@ -168,6 +182,11 @@ const donneepresence = new DonneePresence({
 //Stocker la donnée dans la DB
 donneepresence.save()
 .then(data => {
+    sendSocket(JSON.stringify({
+        date: data.date,
+        valeur: data.valeur,
+        type: 'presence',
+        }));
     res.send(data);
 }).catch(err => {
     res.status(500).send({
@@ -179,7 +198,7 @@ donneepresence.save()
 
 
 // Récupérer toute les données de lumière
-exports.findAll = (req, res) => {
+exports.findAllPres = (req, res) => {
     DonneePresence.find()
     .then( donneepresence => {
         res.send(donneepresence);
@@ -191,7 +210,7 @@ exports.findAll = (req, res) => {
 };
 
 // Récupérer une seule donnée de lumière
-exports.findOne = (req, res) => {
+exports.findOnePres = (req, res) => {
     DonneePresence.findById(req.params.dataId)
     .then(donneepresence => {
         if(!donneepresence){
@@ -220,7 +239,7 @@ exports.findOne = (req, res) => {
 
 
 // Créer et stocker une nouvelle donnée de flamme
-exports.create = (req, res) => {
+exports.createFlam = (req, res) => {
 
     //Valider la requête
     if(!req.body.valeur) {
@@ -238,6 +257,11 @@ const donneeflamme = new DonneeFlamme({
 //Stocker la donnée dans la DB
 donneeflamme.save()
 .then(data => {
+    sendSocket(JSON.stringify({
+        date: data.date,
+        valeur: data.valeur,
+        type: 'flamme',
+        }));
     res.send(data);
 }).catch(err => {
     res.status(500).send({
@@ -249,7 +273,7 @@ donneeflamme.save()
 
 
 // Récupérer toute les données de flamme
-exports.findAll = (req, res) => {
+exports.findAllFlam = (req, res) => {
     DonneeFlamme.find()
     .then( donneeflamme => {
         res.send(donneeflamme);
@@ -261,7 +285,7 @@ exports.findAll = (req, res) => {
 };
 
 // Récupérer une seule donnée de lumière
-exports.findOne = (req, res) => {
+exports.findOneFlam = (req, res) => {
     DonneeFlamme.findById(req.params.dataId)
     .then(donneeflamme => {
         if(!donneeflamme){
@@ -281,3 +305,24 @@ exports.findOne = (req, res) => {
         });
     });
 };
+
+exports.webSocket = (ws,req) => {
+    
+    ws.on('message', (msg) => {
+        msg = JSON.parse(msg);
+        if(msg.type == 'connect') {
+            console.log('push tableau');
+            tableauSocket.push(ws);
+        }
+    })
+};
+
+sendSocket = (data) => {
+    console.log(data);
+    for(var i in tableauSocket) {
+        if(tableauSocket[i].readyState !== tableauSocket[i].CLOSED){
+        tableauSocket[i].send(data);
+        }
+    }
+
+}
