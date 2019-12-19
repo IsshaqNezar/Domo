@@ -1,4 +1,5 @@
 const DonneeTemp = require('../models/temp.model.js');
+const DonneeTempAuto = require('../models/tempAuto.model.js');
 const DonneeLum = require('../models/lumiere.model.js');
 const DonneePresence = require('../models/presence.model.js');
 const DonneeFlamme = require('../models/flamme.model.js');
@@ -82,6 +83,51 @@ exports.findOneTemp = (req, res) => {
 };
 
 
+// Créer et stocker une nouvelle donnée de températureAuto
+exports.createTempAuto = (req, res) => {
+
+    //Valider la requête
+    if(!req.body.valeur) {
+        return res.status(400).send({
+            message: "Il faut une donnée"   
+        });
+    }
+
+//Créer la donnée de température
+const donneetempauto = new DonneeTempAuto({
+    valeur: req.body.valeur || "Pas de valeur",
+});
+
+//Stocker la donnée dans la DB
+donneetempauto.save()
+.then(data => {
+    
+    sendSocket(JSON.stringify({
+        valeur: data.valeur,
+        type: 'temperatureauto',
+        }));
+    res.send(data);
+    
+}).catch(err => {
+    res.status(500).send({
+        message: err.message || "Une erreure est apparue durant le stockage."
+    });
+});
+
+};
+
+// Récupérer toute les données de températureAuto
+exports.findAllTempAuto = (req, res) => {
+    DonneeTempAuto.find()
+    .then( donneetempauto => {
+        res.send(donneetempauto);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
 /* 
 *****************************************************************************
 
@@ -99,7 +145,7 @@ exports.createLum = (req, res) => {
         });
     }
 
-//Créer la donnée de température
+//Créer la donnée de lumière
 const donneelum = new DonneeLum({
     valeur: req.body.valeur || "Pas de valeur",
     date: req.body.date
@@ -108,7 +154,7 @@ const donneelum = new DonneeLum({
 //Stocker la donnée dans la DB
 donneelum.save()
 .then(data => {
-    ssendSocket(JSON.stringify({
+    sendSocket(JSON.stringify({
         date: data.date,
         valeur: data.valeur,
         type: 'lumiere',
@@ -230,6 +276,9 @@ exports.findOnePres = (req, res) => {
         });
     });
 };
+
+
+
 
 /* ***************************************************************
 

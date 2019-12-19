@@ -4,8 +4,12 @@ module.exports = (app) => {
     // Nouvelle donnée de température
     app.post('/temperature', domo.createTemp);
 
+    app.post('/temperatureauto', domo.createTempAuto);
+
     // Récupérer toutes les données Temperature
     app.get('/temperature', domo.findAllTemp);
+
+    app.get('/temperatureauto', domo.findAllTempAuto);
 
     // Récupérer une seule donnée de Température
     app.get('/temperature/:dataId', domo.findOneTemp);
