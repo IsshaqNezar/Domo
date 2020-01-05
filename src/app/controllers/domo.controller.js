@@ -1,8 +1,22 @@
 const DonneeTemp = require('../models/temp.model.js');
 const DonneeTempAuto = require('../models/tempAuto.model.js');
+const DonneeVentilo = require('../models/ventilo.model.js');
+const DonneeVentiloSpeed = require('../models/ventilospeed.model.js');
+const DonneeSeuilVentilo = require('../models/seuilventilo.model.js');
+
+
 const DonneeLum = require('../models/lumiere.model.js');
+const DonneeIntensiteLum = require('../models/intensitelum.model.js');
+const DonneeTempsLum = require('../models/tempslum.model.js');
+const DonneeSeuilLum = require('../models/seuillum.model.js');
+
 const DonneePresence = require('../models/presence.model.js');
 const DonneeFlamme = require('../models/flamme.model.js');
+
+const DonneeVoletUp = require('../models/voletup.model.js');
+const DonneeVoletStop = require('../models/voletstop.model.js');
+const DonneeVoletDown = require('../models/voletdown.model.js');
+
 
 var tableauSocket = [];
 
@@ -128,6 +142,154 @@ exports.findAllTempAuto = (req, res) => {
     });
 };
 
+
+
+/* -------------------------------VENTILO-------------------------------------- */
+
+// Créer et stocker une nouvelle donnée de Ventilo
+exports.createVentilo = (req, res) => {
+
+    //Valider la requête
+    if(!req.body.valeur) {
+        return res.status(400).send({
+            message: "Il faut une donnée"   
+        });
+    }
+
+//Créer la donnée de température
+const donneeventilo = new DonneeVentilo({
+    valeur: req.body.valeur || "Pas de valeur",
+});
+
+//Stocker la donnée dans la DB
+donneeventilo.save()
+.then(data => {
+    
+    sendSocket(JSON.stringify({
+        valeur: data.valeur,
+        type: 'donneeventilo',
+        }));
+    res.send(data);
+    
+}).catch(err => {
+    res.status(500).send({
+        message: err.message || "Une erreure est apparue durant le stockage."
+    });
+});
+
+};
+
+// Récupérer toute les données de ventilo
+exports.findAllVentilo = (req, res) => {
+    DonneeVentilo.find()
+    .then( donneeventilo => {
+        res.send(donneeventilo);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
+
+////// Vitesse ///////
+
+// Créer et stocker une nouvelle donnée de Ventilo
+exports.createVentiloSpeed = (req, res) => {
+
+    //Valider la requête
+    if(!req.body.valeur) {
+        return res.status(400).send({
+            message: "Il faut une donnée"   
+        });
+    }
+
+//Créer la donnée de température
+const donneeventilospeed = new DonneeVentiloSpeed({
+    valeur: req.body.valeur || "Pas de valeur",
+});
+
+//Stocker la donnée dans la DB
+donneeventilospeed.save()
+.then(data => {
+    
+    sendSocket(JSON.stringify({
+        valeur: data.valeur,
+        type: 'donneeventilospeed',
+        }));
+    res.send(data);
+    
+}).catch(err => {
+    res.status(500).send({
+        message: err.message || "Une erreure est apparue durant le stockage."
+    });
+});
+
+};
+
+// Récupérer toute les données de ventilo
+exports.findAllVentiloSpeed = (req, res) => {
+    DonneeVentiloSpeed.find()
+    .then( donneeventilospeed => {
+        res.send(donneeventilospeed);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
+
+
+////// SEUIL ///////
+
+// Créer et stocker une nouvelle donnée de Ventilo
+exports.createseuilventilo = (req, res) => {
+
+    //Valider la requête
+    if(!req.body.valeur) {
+        return res.status(400).send({
+            message: "Il faut une donnée"   
+        });
+    }
+
+//Créer la donnée de température
+const donneeseuilventilo = new DonneeSeuilVentilo({
+    valeur: req.body.valeur || "Pas de valeur",
+});
+
+//Stocker la donnée dans la DB
+donneeseuilventilo.save()
+.then(data => {
+    
+    sendSocket(JSON.stringify({
+        valeur: data.valeur,
+        type: 'donneeseuilventilo',
+        }));
+    res.send(data);
+    
+}).catch(err => {
+    res.status(500).send({
+        message: err.message || "Une erreure est apparue durant le stockage."
+    });
+});
+
+};
+
+// Récupérer toute les données de ventilo
+exports.findAllseuilventilo = (req, res) => {
+    DonneeSeuilVentilo.find()
+    .then( donneeseuilventilo => {
+        res.send(donneeseuilventilo);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
+
+
 /* 
 *****************************************************************************
 
@@ -202,6 +364,152 @@ exports.findOneLum = (req, res) => {
         });
     });
 };
+
+
+////////////////////// INTENSITE LUMIERE //////////////////////////////
+
+// Créer et stocker une nouvelle donnée de Ventilo
+exports.createintensitelum = (req, res) => {
+
+    //Valider la requête
+    if(!req.body.valeur) {
+        return res.status(400).send({
+            message: "Il faut une donnée"   
+        });
+    }
+
+//Créer la donnée de température
+const donneeintensitelum = new DonneeIntensiteLum({
+    valeur: req.body.valeur || "Pas de valeur",
+});
+
+//Stocker la donnée dans la DB
+donneeintensitelum.save()
+.then(data => {
+    
+    sendSocket(JSON.stringify({
+        valeur: data.valeur,
+        type: 'donneeintensitelum',
+        }));
+    res.send(data);
+    
+}).catch(err => {
+    res.status(500).send({
+        message: err.message || "Une erreure est apparue durant le stockage."
+    });
+});
+
+};
+
+// Récupérer toute les données de ventilo
+exports.findAllintensitelum = (req, res) => {
+    DonneeIntensiteLum.find()
+    .then( donneeintensitelum => {
+        res.send(donneeintensitelum);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
+
+/////////////////////////// TEMPS LUM ///////////////////////////////
+
+// Créer et stocker une nouvelle donnée de Ventilo
+exports.createtempslum = (req, res) => {
+
+    //Valider la requête
+    if(!req.body.valeur) {
+        return res.status(400).send({
+            message: "Il faut une donnée"   
+        });
+    }
+
+//Créer la donnée de température
+const donneetempslum = new DonneeTempsLum({
+    valeur: req.body.valeur || "Pas de valeur",
+});
+
+//Stocker la donnée dans la DB
+donneetempslum.save()
+.then(data => {
+    
+    sendSocket(JSON.stringify({
+        valeur: data.valeur,
+        type: 'donneetempslum',
+        }));
+    res.send(data);
+    
+}).catch(err => {
+    res.status(500).send({
+        message: err.message || "Une erreure est apparue durant le stockage."
+    });
+});
+
+};
+
+// Récupérer toute les données de ventilo
+exports.findAlltempslum = (req, res) => {
+    DonneeTempsLum.find()
+    .then( donneetempslum => {
+        res.send(donneetempslum);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
+
+//////////////////////// SEUIL LUM //////////////////////////////
+
+// Créer et stocker une nouvelle donnée de Ventilo
+exports.createseuillum = (req, res) => {
+
+    //Valider la requête
+    if(!req.body.valeur) {
+        return res.status(400).send({
+            message: "Il faut une donnée"   
+        });
+    }
+
+//Créer la donnée de température
+const donneeseuillum = new DonneeSeuilLum({
+    valeur: req.body.valeur || "Pas de valeur",
+});
+
+//Stocker la donnée dans la DB
+donneeseuillum.save()
+.then(data => {
+    
+    sendSocket(JSON.stringify({
+        valeur: data.valeur,
+        type: 'donneeseuillum',
+        }));
+    res.send(data);
+    
+}).catch(err => {
+    res.status(500).send({
+        message: err.message || "Une erreure est apparue durant le stockage."
+    });
+});
+
+};
+
+// Récupérer toute les données de ventilo
+exports.findAllseuillum = (req, res) => {
+    DonneeSeuilLum.find()
+    .then( donneeseuillum => {
+        res.send(donneeseuillum);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
+
 
 /* ***************************************************************
 
@@ -355,6 +663,155 @@ exports.findOneFlam = (req, res) => {
     });
 };
 
+/* ************************* VOLET ********************************* */
+
+
+/////// UP /////////
+
+// Créer et stocker une nouvelle donnée de volet
+exports.createvoletup = (req, res) => {
+
+    //Valider la requête
+    if(!req.body.valeur) {
+        return res.status(400).send({
+            message: "Il faut une donnée"   
+        });
+    }
+
+//Créer la donnée de volet
+const donneevoletup = new DonneeVoletUp({
+    valeur: req.body.valeur || "Pas de valeur",
+});
+
+//Stocker la donnée dans la DB
+donneevoletup.save()
+.then(data => {
+    
+    sendSocket(JSON.stringify({
+        valeur: data.valeur,
+        type: 'donneevoletup',
+        }));
+    res.send(data);
+    
+}).catch(err => {
+    res.status(500).send({
+        message: err.message || "Une erreure est apparue durant le stockage."
+    });
+});
+
+};
+
+// Récupérer toute les données de volet
+exports.findAllvoletup = (req, res) => {
+    DonneeVoletUp.find()
+    .then( donneevoletup => {
+        res.send(donneevoletup);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
+
+
+/////////////////// STOP //////////////////
+
+// Créer et stocker une nouvelle donnée de volet
+exports.createvoletstop = (req, res) => {
+
+    //Valider la requête
+    if(!req.body.valeur) {
+        return res.status(400).send({
+            message: "Il faut une donnée"   
+        });
+    }
+
+//Créer la donnée de volet
+const donneevoletstop = new DonneeVoletStop({
+    valeur: req.body.valeur || "Pas de valeur",
+});
+
+//Stocker la donnée dans la DB
+donneevoletstop.save()
+.then(data => {
+    
+    sendSocket(JSON.stringify({
+        valeur: data.valeur,
+        type: 'donneevoletstop',
+        }));
+    res.send(data);
+    
+}).catch(err => {
+    res.status(500).send({
+        message: err.message || "Une erreure est apparue durant le stockage."
+    });
+});
+
+};
+
+// Récupérer toute les données de volet
+exports.findAllvoletstop = (req, res) => {
+    DonneeVoletStop.find()
+    .then( donneevoletstop => {
+        res.send(donneevoletstop);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
+////////////////// DOWN ///////////////////
+
+// Créer et stocker une nouvelle donnée de volet
+exports.createvoletdown = (req, res) => {
+
+    //Valider la requête
+    if(!req.body.valeur) {
+        return res.status(400).send({
+            message: "Il faut une donnée"   
+        });
+    }
+
+//Créer la donnée de volet
+const donneevoletdown = new DonneeVoletDown({
+    valeur: req.body.valeur || "Pas de valeur",
+});
+
+//Stocker la donnée dans la DB
+donneevoletdown.save()
+.then(data => {
+    
+    sendSocket(JSON.stringify({
+        valeur: data.valeur,
+        type: 'donneevoletdown',
+        }));
+    res.send(data);
+    
+}).catch(err => {
+    res.status(500).send({
+        message: err.message || "Une erreure est apparue durant le stockage."
+    });
+});
+
+};
+
+// Récupérer toute les données de volet
+exports.findAllvoletdown = (req, res) => {
+    DonneeVoletDown.find()
+    .then( donneevoletdown => {
+        res.send(donneevoletdown);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
+
+/* ************************* SOCKET **************************** */
+
 exports.webSocket = (ws,req) => {
     
     ws.on('message', (msg) => {
@@ -365,6 +822,7 @@ exports.webSocket = (ws,req) => {
         }
     })
 };
+
 
 sendSocket = (data) => {
     console.log(data);
