@@ -64,7 +64,7 @@ donneetemp.save()
 
 // Récupérer toute les données de température
 exports.findAllTemp = (req, res) => {
-    DonneeTemp.find()
+    DonneeTemp.find().limit(1).sort({$natural:-1})
     .then( donneetemp => {
         res.send(donneetemp);
     }).catch(err => {
@@ -132,7 +132,7 @@ donneetempauto.save()
 
 // Récupérer toute les données de températureAuto
 exports.findAllTempAuto = (req, res) => {
-    DonneeTempAuto.find()
+    DonneeTempAuto.find().limit(1).sort({$natural:-1})
     .then( donneetempauto => {
         res.send(donneetempauto);
     }).catch(err => {
@@ -181,7 +181,7 @@ donneeventilo.save()
 
 // Récupérer toute les données de ventilo
 exports.findAllVentilo = (req, res) => {
-    DonneeVentilo.find()
+    DonneeVentilo.find().limit(1).sort({$natural:-1})
     .then( donneeventilo => {
         res.send(donneeventilo);
     }).catch(err => {
@@ -229,7 +229,7 @@ donneeventilospeed.save()
 
 // Récupérer toute les données de ventilo
 exports.findAllVentiloSpeed = (req, res) => {
-    DonneeVentiloSpeed.find()
+    DonneeVentiloSpeed.find().limit(1).sort({$natural:-1})
     .then( donneeventilospeed => {
         res.send(donneeventilospeed);
     }).catch(err => {
@@ -278,7 +278,7 @@ donneeseuilventilo.save()
 
 // Récupérer toute les données de ventilo
 exports.findAllseuilventilo = (req, res) => {
-    DonneeSeuilVentilo.find()
+    DonneeSeuilVentilo.find().limit(1).sort({$natural:-1})
     .then( donneeseuilventilo => {
         res.send(donneeseuilventilo);
     }).catch(err => {
@@ -333,7 +333,7 @@ donneelum.save()
 
 // Récupérer toute les données de lumière
 exports.findAllLum = (req, res) => {
-    DonneeLum.find()
+    DonneeLum.find().limit(1).sort({$natural:-1})
     .then( donneelum => {
         res.send(donneelum);
     }).catch(err => {
@@ -403,7 +403,7 @@ donneeintensitelum.save()
 
 // Récupérer toute les données de ventilo
 exports.findAllintensitelum = (req, res) => {
-    DonneeIntensiteLum.find()
+    DonneeIntensiteLum.find().limit(1).sort({$natural:-1})
     .then( donneeintensitelum => {
         res.send(donneeintensitelum);
     }).catch(err => {
@@ -451,7 +451,7 @@ donneetempslum.save()
 
 // Récupérer toute les données de ventilo
 exports.findAlltempslum = (req, res) => {
-    DonneeTempsLum.find()
+    DonneeTempsLum.find().limit(1).sort({$natural:-1})
     .then( donneetempslum => {
         res.send(donneetempslum);
     }).catch(err => {
@@ -499,7 +499,7 @@ donneeseuillum.save()
 
 // Récupérer toute les données de ventilo
 exports.findAllseuillum = (req, res) => {
-    DonneeSeuilLum.find()
+    DonneeSeuilLum.find().limit(1).sort({$natural:-1})
     .then( donneeseuillum => {
         res.send(donneeseuillum);
     }).catch(err => {
@@ -553,7 +553,7 @@ donneepresence.save()
 
 // Récupérer toute les données de lumière
 exports.findAllPres = (req, res) => {
-    DonneePresence.find()
+    DonneePresence.find().limit(1).sort({$natural:-1})
     .then( donneepresence => {
         res.send(donneepresence);
     }).catch(err => {
@@ -631,7 +631,7 @@ donneeflamme.save()
 
 // Récupérer toute les données de flamme
 exports.findAllFlam = (req, res) => {
-    DonneeFlamme.find()
+    DonneeFlamme.find().limit(1).sort({$natural:-1})
     .then( donneeflamme => {
         res.send(donneeflamme);
     }).catch(err => {
@@ -703,7 +703,7 @@ donneevoletup.save()
 
 // Récupérer toute les données de volet
 exports.findAllvoletup = (req, res) => {
-    DonneeVoletUp.find()
+    DonneeVoletUp.find().limit(1).sort({$natural:-1})
     .then( donneevoletup => {
         res.send(donneevoletup);
     }).catch(err => {
@@ -752,7 +752,7 @@ donneevoletstop.save()
 
 // Récupérer toute les données de volet
 exports.findAllvoletstop = (req, res) => {
-    DonneeVoletStop.find()
+    DonneeVoletStop.find().limit(1).sort({$natural:-1})
     .then( donneevoletstop => {
         res.send(donneevoletstop);
     }).catch(err => {
@@ -799,7 +799,7 @@ donneevoletdown.save()
 
 // Récupérer toute les données de volet
 exports.findAllvoletdown = (req, res) => {
-    DonneeVoletDown.find()
+    DonneeVoletDown.find().limit(1).sort({$natural:-1})
     .then( donneevoletdown => {
         res.send(donneevoletdown);
     }).catch(err => {
