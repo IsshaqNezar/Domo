@@ -1,3 +1,6 @@
+
+const DonneesDomo = require('../models/données.model.js');
+
 const DonneeTemp = require('../models/temp.model.js');
 const DonneeTempAuto = require('../models/tempAuto.model.js');
 const DonneeVentilo = require('../models/ventilo.model.js');
@@ -9,6 +12,7 @@ const DonneeLum = require('../models/lumiere.model.js');
 const DonneeIntensiteLum = require('../models/intensitelum.model.js');
 const DonneeTempsLum = require('../models/tempslum.model.js');
 const DonneeSeuilLum = require('../models/seuillum.model.js');
+const DonneeLumauto = require('../models/lumiereauto.model');
 
 const DonneePresence = require('../models/presence.model.js');
 const DonneeFlamme = require('../models/flamme.model.js');
@@ -19,6 +23,27 @@ const DonneeVoletDown = require('../models/voletdown.model.js');
 
 
 var tableauSocket = [];
+
+
+exports.findDonneesDomo = (req, res) => {
+
+    DonneesDomo.find()
+    .then(data => {
+        return res.send(data);
+        })
+};
+
+exports.findDonneesDomo = (req, res) => {
+    DonneesDomo.find().limit(1).sort({$natural:-1})
+    .then( donneedomo => {
+        res.send(donneedomo);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
 
 /* ************************************************************** 
 
@@ -43,7 +68,14 @@ const donneetemp = new DonneeTemp({
 });
 
 //Stocker la donnée dans la DB
-donneetemp.save()
+/* donneetemp.save() */
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    temp:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneetemp.save();
+    })
 .then(data => {
     
     sendSocket(JSON.stringify({
@@ -365,6 +397,53 @@ exports.findOneLum = (req, res) => {
     });
 };
 
+// Créer un donnée de lumiere auto
+exports.createLumauto = (req, res) => {
+
+    //Valider la requête
+    if(!req.body.valeur) {
+        return res.status(400).send({
+            message: "Il faut une donnée"   
+        });
+    }
+
+//Créer la donnée de température
+const donneelumauto = new DonneeLumauto({
+    valeur: req.body.valeur || "Pas de valeur",
+    date: req.body.date
+});
+
+//Stocker la donnée dans la DB
+donneelumauto.save()
+.then(data => {
+    
+    sendSocket(JSON.stringify({
+        date: data.date,
+        valeur: data.valeur,
+        type: 'lumiereauto',
+        }));
+    res.send(data);
+    
+}).catch(err => {
+    res.status(500).send({
+        message: err.message || "Une erreure est apparue durant le stockage."
+    });
+});
+
+};
+
+// Récupérer dernière donnée de lumière auto
+exports.findLumauto = (req, res) => {
+    DonneeLumauto.find().limit(1).sort({$natural:-1})
+    .then( donneelumauto => {
+        res.send(donneelumauto);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreure est survenue."
+        });
+    });
+};
+
 
 ////////////////////// INTENSITE LUMIERE //////////////////////////////
 
@@ -671,8 +750,10 @@ exports.findOneFlam = (req, res) => {
 // Créer et stocker une nouvelle donnée de volet
 exports.createvoletup = (req, res) => {
 
+    console.log(req.body);
+    
     //Valider la requête
-    if(!req.body.valeur) {
+    if(req.body.valeur == undefined) {
         return res.status(400).send({
             message: "Il faut une donnée"   
         });
@@ -680,7 +761,7 @@ exports.createvoletup = (req, res) => {
 
 //Créer la donnée de volet
 const donneevoletup = new DonneeVoletUp({
-    valeur: req.body.valeur || "Pas de valeur",
+    valeur: req.body.valeur,
 });
 
 //Stocker la donnée dans la DB
@@ -729,7 +810,7 @@ exports.createvoletstop = (req, res) => {
 
 //Créer la donnée de volet
 const donneevoletstop = new DonneeVoletStop({
-    valeur: req.body.valeur || "Pas de valeur",
+    valeur: req.body.valeur,
 });
 
 //Stocker la donnée dans la DB

@@ -1,6 +1,9 @@
 module.exports = (app) => {
     const domo = require('../controllers/domo.controller.js');
 
+    
+    app.get('/donneesdomo', domo.findDonneesDomo);
+
     /* ************TEMPERATURE******************* */
 
     // Nouvelle donnée de température
@@ -35,6 +38,12 @@ module.exports = (app) => {
 
     // Récupérer toutes les données lumière
     app.get('/lumiere', domo.findAllLum);
+    
+
+    // Récupérer et envoyer données de lumière Auto
+    app.post('/lumiereauto', domo.createLumauto);
+
+    app.get('/lumiereauto', domo.findLumauto);
 
     // Récupérer une seule donnée de lumière
     app.get('/lumiere/:dataId', domo.findOneLum);
