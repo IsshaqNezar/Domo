@@ -1,5 +1,5 @@
 
-const DonneesDomo = require('../models/données.model.js');
+const DonneesDomo = require('../models/donnees.model.js');
 
 const DonneeTemp = require('../models/temp.model.js');
 const DonneeTempAuto = require('../models/tempAuto.model.js');
@@ -145,7 +145,13 @@ const donneetempauto = new DonneeTempAuto({
 });
 
 //Stocker la donnée dans la DB
-donneetempauto.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    tempAuto:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneetempauto.save();
+    })
 .then(data => {
     
     sendSocket(JSON.stringify({
@@ -194,7 +200,13 @@ const donneeventilo = new DonneeVentilo({
 });
 
 //Stocker la donnée dans la DB
-donneeventilo.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    ventilo:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneeventilo.save();
+    })
 .then(data => {
     
     sendSocket(JSON.stringify({
@@ -242,7 +254,13 @@ const donneeventilospeed = new DonneeVentiloSpeed({
 });
 
 //Stocker la donnée dans la DB
-donneeventilospeed.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    ventilospeed:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneeventilospeed.save();
+    })
 .then(data => {
     
     sendSocket(JSON.stringify({
@@ -291,7 +309,13 @@ const donneeseuilventilo = new DonneeSeuilVentilo({
 });
 
 //Stocker la donnée dans la DB
-donneeseuilventilo.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    seuilventilo:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneeseuilventilo.save();
+    })
 .then(data => {
     
     sendSocket(JSON.stringify({
@@ -346,7 +370,13 @@ const donneelum = new DonneeLum({
 });
 
 //Stocker la donnée dans la DB
-donneelum.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    lumiere:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneelum.save();
+    })
 .then(data => {
     sendSocket(JSON.stringify({
         date: data.date,
@@ -414,7 +444,13 @@ const donneelumauto = new DonneeLumauto({
 });
 
 //Stocker la donnée dans la DB
-donneelumauto.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    lumiereauto:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneelumauto.save();
+    })
 .then(data => {
     
     sendSocket(JSON.stringify({
@@ -463,7 +499,13 @@ const donneeintensitelum = new DonneeIntensiteLum({
 });
 
 //Stocker la donnée dans la DB
-donneeintensitelum.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    intensitelum:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneeintensitelum.save();
+    })
 .then(data => {
     
     sendSocket(JSON.stringify({
@@ -511,7 +553,13 @@ const donneetempslum = new DonneeTempsLum({
 });
 
 //Stocker la donnée dans la DB
-donneetempslum.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    tempslum:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneetempslum.save();
+    })
 .then(data => {
     
     sendSocket(JSON.stringify({
@@ -559,7 +607,13 @@ const donneeseuillum = new DonneeSeuilLum({
 });
 
 //Stocker la donnée dans la DB
-donneeseuillum.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    seuillum:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneeseuillum.save();
+    })
 .then(data => {
     
     sendSocket(JSON.stringify({
@@ -613,7 +667,13 @@ const donneepresence = new DonneePresence({
 });
 
 //Stocker la donnée dans la DB
-donneepresence.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    presence:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneepresence.save();
+    })
 .then(data => {
     sendSocket(JSON.stringify({
         date: data.date,
@@ -691,7 +751,13 @@ const donneeflamme = new DonneeFlamme({
 });
 
 //Stocker la donnée dans la DB
-donneeflamme.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    flamme:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneeflamme.save();
+    })
 .then(data => {
     sendSocket(JSON.stringify({
         date: data.date,
@@ -765,7 +831,13 @@ const donneevoletup = new DonneeVoletUp({
 });
 
 //Stocker la donnée dans la DB
-donneevoletup.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    voletup:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneevoletup.save();
+    })
 .then(data => {
     
     sendSocket(JSON.stringify({
@@ -814,7 +886,13 @@ const donneevoletstop = new DonneeVoletStop({
 });
 
 //Stocker la donnée dans la DB
-donneevoletstop.save()
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    voletstop:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneevoletstop.save();
+    })
 .then(data => {
     
     sendSocket(JSON.stringify({
@@ -861,8 +939,13 @@ const donneevoletdown = new DonneeVoletDown({
 });
 
 //Stocker la donnée dans la DB
-donneevoletdown.save()
-.then(data => {
+DonneesDomo.findOne()
+.then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
+    voletdown:{valeur:req.body.valeur}
+});})
+.then(() => {
+    return donneevoletdown.save();
+    }).then(data => {
     
     sendSocket(JSON.stringify({
         valeur: data.valeur,
