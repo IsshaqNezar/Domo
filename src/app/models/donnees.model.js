@@ -3,28 +3,40 @@ const mongoose = require('mongoose');
 const DonneesSchema = mongoose.Schema({
     
         lumiere : {
-            valeur: String,
-            date: String    
+            valeur: {
+                type: String, 
+                default: ''},  
         },
         flamme:{
-            valeur: String,
-            date: String
+            valeur: {
+                type: String, 
+                default: ''},
             
         },
         intensitelum:{
-            valeur: String,
+            valeur: {
+                type: String, 
+                default: ''},
         },
         lumiereauto:{
-            valeur: false,
+            valeur: {
+                type: false, 
+                default: false},
         },
         presence:{
-            valeur: String,
+            valeur: {
+                type: String, 
+                default: ''},
         },
         seuillum:{
-            valeur: String,
+            valeur: {
+                type: String, 
+                default: ''},
         },
         seuilventilo:{
-            valeur: String,
+            valeur: {
+                type: String, 
+                default: ''},
         },
         temp:{
             valeur: {
@@ -32,22 +44,34 @@ const DonneesSchema = mongoose.Schema({
                 default: ''},
         },
         tempAuto:{
-            valeur: String,
+            valeur: {
+                type: String, 
+                default: ''},
         },
         tempslum:{
-            valeur: String,
+            valeur: {
+                type: String, 
+                default: ''},
         },
         ventilo:{
-            valeur: String,
+            valeur: {
+                type: String, 
+                default: ''},
         },
         ventilospeed:{
-            valeur: String,
+            valeur: {
+                type: String, 
+                default: ''},
         },
         voletdown:{
-            valeur: false,
+            valeur: {
+                type: false, 
+                default: false},
         },
         voletup:{
-            valeur: false,
+            valeur: {
+                type: false, 
+                default: false},
         },
    
     date: String
