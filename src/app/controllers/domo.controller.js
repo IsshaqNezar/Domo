@@ -69,7 +69,7 @@ const donneetemp = new DonneeTemp({
 
 //Stocker la donnée dans la DB
 /* donneetemp.save() */
-DonneesDomo.findOne()
+DonneesDomo.find()
 .then(data => {return DonneesDomo.findByIdAndUpdate(data._id, {
     temp:{valeur:req.body.valeur}
 });})
@@ -357,7 +357,7 @@ exports.findAllseuilventilo = (req, res) => {
 exports.createLum = (req, res) => {
 
     //Valider la requête
-    if(!req.body.valeur) {
+    if(req.body.valeur == undefined) {
         return res.status(400).send({
             message: "Il faut une donnée"   
         });
@@ -365,7 +365,7 @@ exports.createLum = (req, res) => {
 
 //Créer la donnée de lumière
 const donneelum = new DonneeLum({
-    valeur: req.body.valeur || "Pas de valeur",
+    valeur: req.body.valeur,
     date: req.body.date
 });
 
