@@ -188,7 +188,7 @@ exports.findAllTempAuto = (req, res) => {
 exports.createVentilo = (req, res) => {
 
     //Valider la requête
-    if(!req.body.valeur) {
+    if(req.body.valeur == undefined) {
         return res.status(400).send({
             message: "Il faut une donnée"   
         });
@@ -196,7 +196,7 @@ exports.createVentilo = (req, res) => {
 
 //Créer la donnée de température
 const donneeventilo = new DonneeVentilo({
-    valeur: req.body.valeur || "Pas de valeur",
+    valeur: req.body.valeur,
 });
 
 //Stocker la donnée dans la DB
@@ -431,7 +431,7 @@ exports.findOneLum = (req, res) => {
 exports.createLumauto = (req, res) => {
 
     //Valider la requête
-    if(!req.body.valeur) {
+    if(req.body.valeur == undefined) {
         return res.status(400).send({
             message: "Il faut une donnée"   
         });
@@ -439,7 +439,7 @@ exports.createLumauto = (req, res) => {
 
 //Créer la donnée de température
 const donneelumauto = new DonneeLumauto({
-    valeur: req.body.valeur || "Pas de valeur",
+    valeur: req.body.valeur,
     date: req.body.date
 });
 
@@ -738,7 +738,7 @@ exports.findOnePres = (req, res) => {
 exports.createFlam = (req, res) => {
 
     //Valider la requête
-    if(!req.body.valeur) {
+    if(req.body.valeur == undefined) {
         return res.status(400).send({
             message: "Il faut une donnée"   
         });
@@ -746,7 +746,7 @@ exports.createFlam = (req, res) => {
 
 //Créer la donnée de température
 const donneeflamme = new DonneeFlamme({
-    valeur: req.body.valeur || "Pas de valeur",
+    valeur: req.body.valeur,
     date: req.body.date
 });
 
@@ -874,7 +874,7 @@ exports.findAllvoletup = (req, res) => {
 exports.createvoletstop = (req, res) => {
 
     //Valider la requête
-    if(!req.body.valeur) {
+    if(req.body.valeur == undefined) {
         return res.status(400).send({
             message: "Il faut une donnée"   
         });
@@ -927,7 +927,7 @@ exports.findAllvoletstop = (req, res) => {
 exports.createvoletdown = (req, res) => {
 
     //Valider la requête
-    if(!req.body.valeur) {
+    if(req.body.valeur == undefined) {
         return res.status(400).send({
             message: "Il faut une donnée"   
         });
@@ -935,7 +935,7 @@ exports.createvoletdown = (req, res) => {
 
 //Créer la donnée de volet
 const donneevoletdown = new DonneeVoletDown({
-    valeur: req.body.valeur || "Pas de valeur",
+    valeur: req.body.valeur,
 });
 
 //Stocker la donnée dans la DB

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const LumautoSchema = mongoose.Schema({
-    valeur: false,
+    valeur: String,
 }, {
     timestamps: true
 });

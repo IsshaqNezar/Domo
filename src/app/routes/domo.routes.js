@@ -41,9 +41,9 @@ module.exports = (app) => {
     
 
     // Récupérer et envoyer données de lumière Auto
-    app.post('/lumiereauto', domo.createLumauto);
+    app.post('/auto', domo.createLumauto);
 
-    app.get('/lumiereauto', domo.findLumauto);
+    app.get('/auto', domo.findLumauto);
 
     // Récupérer une seule donnée de lumière
     app.get('/lumiere/:dataId', domo.findOneLum);

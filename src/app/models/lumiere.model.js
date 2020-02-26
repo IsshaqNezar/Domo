@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const LumSchema = mongoose.Schema({
     valeur: String,
-    
 }, {
     timestamps: true
 });
